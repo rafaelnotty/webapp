@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>R-Ingenieria</title>
+</head>
+<body>
+    <h1>Welcome To The Future</h1>
+    <h4>_The Powerfull Program for Optimizing Industrial Process</h2>
+        
+    <div id="chat"></div>
+    <input type="text" id="message" onkeydown="sendMessage(event)">
+    <script>
+        var chatDiv = document.getElementById('chat');
+        var messageInput = document.getElementById('message');
+        var socket = new WebSocket("ws://" + window.location.host + "/chat/1");
+
+        socket.onmessage = function(event) {
+            var p = document.createElement('p');
+            p.innerHTML = event.data;
+            chatDiv.appendChild(p);
+        };
+
+        function sendMessage(event) {
+            if (event.key === "Enter") {
+                socket.send(messageInput.value);
+                messageInput.value = '';
+            }
+        }
+    </script>
+</body>
+</html>
